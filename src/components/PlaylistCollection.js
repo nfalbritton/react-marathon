@@ -1,26 +1,42 @@
 import React, { Component } from 'react';
-import data from '..constants/data';
-import App from './App';
+import Playlist from './Playlist';
 
-class PlaylistCollection extends Component {
+class PlaylistCollection extends React.Component {
   constructor(props) {
     super(props);
   }
-}
 
   render(){
-    return(
-      <div>
-        <h3>Testing</h3>
-        <PlaylistCollection data={data}/>,
-      </div>
-    )
-  }
-  return(
-    <ul>
-      {playlists}
-    </ul>
-  )
+    let className;
+    let playlists = this.props.playlists.map(playlist => {
+      if(this.props.selectedPlaylistId === playlist.id) {
+        className = 'selected'
+      } else {
+        className = " "
+      }
 
+      let playlistOnClick = () => {this.props.handlePlaylistSelect(playlist.id)}
+
+      return (
+        <Playlist
+            key={playlist.id}
+            name={playlist.name}
+            songs={playlist.songs}
+            className={className}
+            handlePlaylistSelect={playlistOnClick}
+          />
+        )
+      }
+    )
+      return(
+        <div className="small-4 columns">
+          <h3>Playlists</h3>
+            <ul>
+              {playlists}
+            </ul>
+        </div>
+      )
+    }
+}
 
   export default PlaylistCollection;
